@@ -6,7 +6,8 @@ const textsUtils = {
     stateHidden: 'hidden',
     stateVisible: 'visible',
     newContactModalTitle: 'Novo Contato',
-    homeScreenTitle: 'Seu gerenciador digital de contatos'
+    homeScreenTitle: 'Seu gerenciador digital de contatos',
+    waitForElementToLoad: { timeout: 5000 }
 };
 
 export { textsUtils };

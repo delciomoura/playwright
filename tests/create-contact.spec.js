@@ -103,6 +103,7 @@ test.describe('Contact registration flow', () => {
 test.afterEach(async ({ page }) => {
     const cards = page.locator('.card-content');
     const count = await cards.count();
+    
     if (count > 0) {
         await page.click('[data-cy="btn-remove"]');
         await page.waitForSelector('.content', { state: 'hidden' });

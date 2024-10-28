@@ -18,7 +18,7 @@ const accessLoginScreen = async (page) => {
 };
 
 const clickButton = async (page, selector) => {
-    await page.locator(selector).click({ timeout: 5000 });
+    await page.locator(selector).click(textsUtils.waitForElementToLoad);
 };
 
 const insertEmail = async (page, email) => {
@@ -30,15 +30,15 @@ const insertPassword = async (page, password) => {
 };
 
 const insertNameContact = async (page, name) => {
-    await page.locator(nameSelector).fill(name, { timeout: 5000 });
+    await page.locator(nameSelector).fill(name, textsUtils.waitForElementToLoad);
 };
 
 const insertNumberContact = async (page, number) => {
-    await page.locator(numberSelector).fill(number, { timeout: 5000 });
+    await page.locator(numberSelector).fill(number, textsUtils.waitForElementToLoad);
 };
 
 const insertDescriptionContact = async (page, description) => {
-    await page.locator(descriptionSelector).fill(description, { timeout: 5000 });
+    await page.locator(descriptionSelector).fill(description, textsUtils.waitForElementToLoad);
 };
 
 const login = async (page, emailAndPassword) => {
