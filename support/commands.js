@@ -1,10 +1,12 @@
 import { textsUtils } from '../fixtures/texts-validations';
-import {
-    addNewContactSelector, btnRemoveSelector, cardContentSelector, deleteSelector, descriptionSelector,
-    modalCardSelector,
-    nameEmailSelector, namePasswordSelector, nameSelector,
-    numberSelector, saveButtonSelector, sigInSelector
-} from './commands-selectors';
+import { selectors } from './commands-selectors';
+
+const {
+    addNewContactSelector, btnRemoveSelector, cardContentSelector, deleteSelector,
+    descriptionSelector, modalCardSelector, nameEmailSelector, namePasswordSelector,
+    nameSelector, numberSelector, saveButtonSelector, sigInSelector
+} = selectors;
+
 import {
     validateAbsenceOfContacts,
     validateIfSelectorIsVisibleOrNot,
@@ -15,58 +17,53 @@ const accessLoginScreen = async (page) => {
     await page.goto('http://localhost:8080/');
 };
 
-const clickSigIn = async (page) => {
-    const sigIn = await sigInSelector(page);
-    sigIn.click();
+const clickButton = async (page, selector) => {
+    await page.locator(selector).click({ timeout: 5000 });
+};
+
+const insertEmail = async (page, email) => {
+    await page.fill(nameEmailSelector, email);
+};
+
+const insertPassword = async (page, password) => {
+    await page.fill(namePasswordSelector, password);
+};
+
+const insertNameContact = async (page, name) => {
+    await page.locator(nameSelector).fill(name, { timeout: 5000 });
+};
+
+const insertNumberContact = async (page, number) => {
+    await page.locator(numberSelector).fill(number, { timeout: 5000 });
+};
+
+const insertDescriptionContact = async (page, description) => {
+    await page.locator(descriptionSelector).fill(description, { timeout: 5000 });
 };
 
 const login = async (page, emailAndPassword) => {
-    const emailInput = await nameEmailSelector(page);
-    const passwordInput = await namePasswordSelector(page);
-
-    await emailInput.fill(emailAndPassword.email);
-    await passwordInput.fill(emailAndPassword.password);
-    await clickSigIn(page);
+    await insertEmail(page, emailAndPassword.email);
+    await insertPassword(page, emailAndPassword.password);
+    await clickButton(page, sigInSelector);
     await validateTextH4(page, textsUtils.homeScreenTitle);
 };
 
-const clickAddNewContact = async (page) => {
-    const addNewContactButton = await addNewContactSelector(page);
-    await addNewContactButton.click();
-};
-
-const clickSaveButton = async (page) => {
-    const saveButton = await saveButtonSelector(page);
-    await saveButton.click();
-};
-
-const clickCloseContactRegistrationModal = async (page) => {
-    const btnRemove = await btnRemoveSelector(page);
-    await btnRemove.click();
-};
-
 const createNewContact = async (page, newContactDetails) => {
-
-    await clickAddNewContact(page);
+    await clickButton(page, addNewContactSelector);
     await validateIfSelectorIsVisibleOrNot(page, modalCardSelector, textsUtils.stateVisible);
     await validateTextModalCardTitle(page, textsUtils.newContactModalTitle);
-
-    const nameInput = await nameSelector(page);
-    const numberInput = await numberSelector(page);
-    const descriptionInput = await descriptionSelector(page);
-
-    await nameInput.fill(newContactDetails.name);
-    await numberInput.fill(newContactDetails.number);
-    await descriptionInput.fill(newContactDetails.description);
-    await clickSaveButton(page);
+    await insertNameContact(page, newContactDetails.name);
+    await insertNumberContact(page, newContactDetails.number);
+    await insertDescriptionContact(page, newContactDetails.description);
+    await clickButton(page, saveButtonSelector);
 };
 
 const deleteRegisteredContact = async (page) => {
-    const cards = page.locator(cardContentSelector);
-    const count = await cards.count();
+    const cardsContacts = page.locator(cardContentSelector);
+    const countContacts = await cardsContacts.count();
 
-    if (count > 0) {
-        await clickCloseContactRegistrationModal(page);
+    if (countContacts > 0) {
+        await clickButton(page, btnRemoveSelector);
         await validateAbsenceOfContacts(page);
     } else {
         console.log('No contacts registered')
@@ -74,13 +71,11 @@ const deleteRegisteredContact = async (page) => {
 };
 
 const checkIfNoContactsHaveBeenRegistered = async (page) => {
-    const btnCloseContactModal = await deleteSelector(page);
-    await btnCloseContactModal.click();
+    await clickButton(page, deleteSelector);
     await validateAbsenceOfContacts(page);
 };
 
 export {
-    login, accessLoginScreen, clickAddNewContact,
-    createNewContact, clickCloseContactRegistrationModal, deleteRegisteredContact,
-    checkIfNoContactsHaveBeenRegistered
+    login, accessLoginScreen, createNewContact,
+    deleteRegisteredContact, checkIfNoContactsHaveBeenRegistered
 };

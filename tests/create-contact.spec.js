@@ -100,7 +100,6 @@ test.describe('Contact registration flow', () => {
     });
 });
 
-
 test.afterEach(async ({ page }) => {
     const cards = page.locator('.card-content');
     const count = await cards.count();

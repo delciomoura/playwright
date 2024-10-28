@@ -1,13 +1,19 @@
 import { textsUtils } from '../fixtures/texts-validations';
-import { animationContentSelector, contentSelector, h4Selector, loaderSelector, messageBodySelector, modalCardTitleSelector, pSelector } from './commands-selectors';
+import { selectors } from './commands-selectors';
+
+const {
+    animationContentSelector, contentSelector, h4Selector,
+    loaderSelector, messageBodySelector, modalCardTitleSelector, pSelector
+} = selectors;
+
 const { expect } = require('@playwright/test');
 
 const validateTextH4 = async (page, text) => {
-    expect(await h4Selector(page)).toBe(text);
+    expect(await page.textContent(h4Selector)).toBe(text);
 };
 
 const validateTextModalCardTitle = async (page, text) => {
-    expect(await modalCardTitleSelector(page)).toBe(text);
+    expect(await page.textContent(modalCardTitleSelector)).toBe(text);
 };
 
 const validateIfTheTextIsVisibleOnTheScreen = async (page, selector, text) => {

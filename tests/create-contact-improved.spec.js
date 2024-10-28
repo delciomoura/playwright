@@ -1,13 +1,12 @@
 const { test } = require('@playwright/test');
 const {
-    login, accessLoginScreen, createNewContact,
-    clickCloseContactRegistrationModal, deleteRegisteredContact,
-    checkIfNoContactsHaveBeenRegistered
+    login, accessLoginScreen, createNewContact, deleteRegisteredContact, checkIfNoContactsHaveBeenRegistered
 } = require('../support/commands');
 const { contact, namelessContact, numberlessContact, descriptionlessContact } = require('../fixtures/data-new-contact');
 const { validateCreatedContact, validateIfTheTextIsVisibleOnTheScreen } = require('../support/commands-validations');
 const { delcioLogin } = require('../fixtures/data-login');
-const { hasTextDangerSelector } = require('../support/commands-selectors');
+const { selectors } = require('../support/commands-selectors');
+const { hasTextDangerSelector } = selectors;
 const { textsUtils } = require('../fixtures/texts-validations');
 
 test.beforeEach(async ({ page }) => {
@@ -19,7 +18,6 @@ test.describe('Contact registration flow', () => {
     test('Validate registration of a new contact', async ({ page }) => {
         await createNewContact(page, contact);
         await validateCreatedContact(page, contact);
-        await clickCloseContactRegistrationModal(page);
     });
 
     test('Registration new contact without providing the name', async ({ page }) => {
