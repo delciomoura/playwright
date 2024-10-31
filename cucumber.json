@@ -1,0 +1,11 @@
+{
+    "default": {
+        "timeout": 20000,
+        "paths": [
+            "features"
+        ],
+        "require": [
+            "support/step-definitions/*.js"
+        ]
+    }
+}

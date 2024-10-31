@@ -10,7 +10,6 @@ const { hasTextDangerSelector } = selectors;
 const { textsUtils } = require('../fixtures/texts-validations');
 
 test.beforeEach(async ({ page }) => {
-    await accessLoginScreen(page);
     await login(page, delcioLogin);
 });
 

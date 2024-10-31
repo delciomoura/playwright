@@ -21,4 +21,4 @@ const selectors = {
     modalCardTitleSelector: '[class="modal-card-title"]'
 };
 
-export { selectors };
+module.exports = { selectors };

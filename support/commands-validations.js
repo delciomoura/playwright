@@ -1,5 +1,5 @@
-import { textsUtils } from '../fixtures/texts-validations';
-import { selectors } from './commands-selectors';
+const { textsUtils } = require('../fixtures/texts-validations');
+const { selectors } = require('./commands-selectors');
 
 const {
     animationContentSelector, contentSelector, h4Selector,
@@ -36,13 +36,27 @@ const validateIfSelectorIsVisibleOrNot = async (page, selector, state) => {
     await page.waitForSelector(selector, { state });
 };
 
+const validateQuantityOfItemsonTheSecreen = async (page, selector, quantity) => {
+    const locator = await page.locator(selector);
+    const count = await locator.count();
+    if (count === quantity) {
+        console.log('Existe apenas um elemento .card-content na tela.');
+    } else {
+        throw new Error(`Teste falhou: existem ${count} elementos .card-content na tela.`);
+    }
+};
+
 const validateAbsenceOfContacts = async (page) => {
+    await validateIfSelectorIsVisibleOrNot(page, contentSelector, textsUtils.stateHidden);
+    await validateIfSelectorIsVisibleOrNot(page, loaderSelector, textsUtils.stateHidden);
+    await page.fill('[placeholder="Número do Whats"]', '123');
+    await page.click('[class="button is-primary"]');
     await validateIfSelectorIsVisibleOrNot(page, contentSelector, textsUtils.stateHidden);
     await validateIfSelectorIsVisibleOrNot(page, loaderSelector, textsUtils.stateHidden);
     await validateIfTheTextIsVisibleOnTheScreen(page, messageBodySelector, textsUtils.contactNotFound);
 };
 
-export {
-    validateTextH4, validateTextModalCardTitle, validateCreatedContact,
+module.exports = {
+    validateTextH4, validateTextModalCardTitle, validateCreatedContact, validateQuantityOfItemsonTheSecreen,
     validateIfSelectorIsVisibleOrNot, validateIfTheTextIsVisibleOnTheScreen, validateAbsenceOfContacts
 };

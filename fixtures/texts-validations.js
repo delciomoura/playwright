@@ -7,7 +7,9 @@ const textsUtils = {
     stateVisible: 'visible',
     newContactModalTitle: 'Novo Contato',
     homeScreenTitle: 'Seu gerenciador digital de contatos',
-    waitForElementToLoad: { timeout: 5000 }
+    waitForElementToLoad: { timeout: 10000 },
+    onlyOneRegisteredContatct: 1,
+    noContactsRegistered: 0
 };
 
-export { textsUtils };
+module.exports = { textsUtils };

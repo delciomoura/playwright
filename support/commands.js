@@ -1,5 +1,5 @@
-import { textsUtils } from '../fixtures/texts-validations';
-import { selectors } from './commands-selectors';
+const { textsUtils } = require('../fixtures/texts-validations');
+const { selectors } = require('./commands-selectors');
 
 const {
     addNewContactSelector, btnRemoveSelector, cardContentSelector, deleteSelector,
@@ -7,11 +7,11 @@ const {
     nameSelector, numberSelector, saveButtonSelector, sigInSelector
 } = selectors;
 
-import {
+const {
     validateAbsenceOfContacts,
     validateIfSelectorIsVisibleOrNot,
     validateTextH4, validateTextModalCardTitle
-} from './commands-validations';
+} = require('./commands-validations');
 
 const accessLoginScreen = async (page) => {
     await page.goto('http://localhost:8080/');
@@ -42,6 +42,7 @@ const insertDescriptionContact = async (page, description) => {
 };
 
 const login = async (page, emailAndPassword) => {
+    await accessLoginScreen(page);
     await insertEmail(page, emailAndPassword.email);
     await insertPassword(page, emailAndPassword.password);
     await clickButton(page, sigInSelector);
@@ -75,7 +76,7 @@ const checkIfNoContactsHaveBeenRegistered = async (page) => {
     await validateAbsenceOfContacts(page);
 };
 
-export {
+module.exports = {
     login, accessLoginScreen, createNewContact,
     deleteRegisteredContact, checkIfNoContactsHaveBeenRegistered
 };

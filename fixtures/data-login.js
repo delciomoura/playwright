@@ -3,4 +3,4 @@ const delcioLogin = {
     password: 'delcio123'
 };
 
-export { delcioLogin }
+module.exports = { delcioLogin }

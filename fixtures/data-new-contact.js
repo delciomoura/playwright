@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+const { faker } =  require('@faker-js/faker');
 
 const contact = {
     name: faker.person.fullName(),
@@ -24,4 +24,4 @@ const descriptionlessContact = {
     description: ""
 };
 
-export { contact, namelessContact, numberlessContact, descriptionlessContact }
+module.exports = { contact, namelessContact, numberlessContact, descriptionlessContact }
